@@ -1,41 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-public class TeacherService {
-    private List<Teacher> teachers;
-    private int nextId;
+public class main {
+    public static void main(String[] args) {
+        TeacherController controller = new TeacherController();
+        Scanner scanner = new Scanner(System.in);
 
-    public TeacherService() {
-        teachers = new ArrayList<>();
-        nextId = 1; // Автоматическая генерация ID
-    }
+        while (true) {
+            System.out.println("\n1. Добавить учителя\n2. Показать всех учителей\n3. Редактировать учителя\n4. Показать учителя по ID\n5. Выйти");
+            System.out.print("Выберите действие: ");
+            String choice = scanner.nextLine();
 
-    public Teacher addTeacher(String name, String subject) {
-        Teacher teacher = new Teacher(nextId++, name, subject);
-        teachers.add(teacher);
-        return teacher;
-    }
-
-    public List<Teacher> getAllTeachers() {
-        return teachers;
-    }
-
-    public Teacher getTeacherById(int id) {
-        for (Teacher teacher : teachers) {
-            if (teacher.getId() == id) {
-                return teacher;
+            switch (choice) {
+                case "1":
+                    controller.addTeacher();
+                    break;
+                case "2":
+                    controller.showAllTeachers();
+                    break;
+                case "3":
+                    controller.editTeacher();
+                    break;
+                case "4":
+                    controller.showTeacherById();
+                    break;
+                case "5":
+                    System.out.println("Выход из программы.");
+                    return;
+                default:
+                    System.out.println("Некорректный выбор.");
             }
         }
-        return null; // Учитель не найден
-    }
-
-    public boolean editTeacher(int id, String newName, String newSubject) {
-        Teacher teacher = getTeacherById(id);
-        if (teacher != null) {
-            teacher.setName(newName);
-            teacher.setSubject(newSubject);
-            return true;
-        }
-        return false; // Учитель с указанным ID не найден
     }
 }
+
